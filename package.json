@@ -1,0 +1,17 @@
+{
+  "name": "",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "compile:ropsten": "truffle compile compile --network ropsten --reset",
+    "deploy-ropsten": "truffle migrate --network ropsten --reset"
+  },
+  "author": "masaun",
+  "license": "ISC",
+  "dependencies": {
+    "chainlink": "^0.7.5",
+    "truffle-hdwallet-provider": "^1.0.17",
+    "webpack": "4.41.0"
+  }
+}
