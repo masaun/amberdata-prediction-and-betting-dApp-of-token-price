@@ -2,8 +2,10 @@ const BetPool = artifacts.require("BetPool");
 const LinkTokenInterface = artifacts.require("LinkTokenInterface");
 
 const linkTokenAddress = "0x20fE562d797A42Dcb3399062AE9546cd06f63280";
-const oracle = "0x4a3fbbb385b5efeb4bc84a25aaadcd644bd09721";
-const jobId = web3.utils.toHex("d02b14632b6141ec90bb8b2b9b937848");
+const oracle = "0xc99B3D447826532722E41bc36e644ba3479E4365";         // Oracle address of Amberdata Chainlink (Testnet) on Ropsten
+//const oracle = "0x4a3fbbb385b5efeb4bc84a25aaadcd644bd09721";
+const jobId = web3.utils.toHex("6b0a1ab2ce554465930aceaa79bb4346");  // Job ID of Amberdata Chainlink (Testnet) on Ropsten
+//const jobId = web3.utils.toHex("d02b14632b6141ec90bb8b2b9b937848");
 
 /***
  * @notice - Contract pay fee for sending request / getting response with LINK（ERC20）. 

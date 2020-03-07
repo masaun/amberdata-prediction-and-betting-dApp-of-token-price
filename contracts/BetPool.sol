@@ -15,6 +15,7 @@ contract BetPool is ChainlinkClient, Ownable{
     bool public resultReceived;
     bool public result;
 
+
     constructor(
         address _link,
         address _oracle,
@@ -67,9 +68,11 @@ contract BetPool is ChainlinkClient, Ownable{
     {
         require(!resultReceived, "The result has already been received.");
         Chainlink.Request memory req = buildChainlinkRequest(jobId, this, this.fulfill.selector);
-        req.add("low", "1");
-        req.add("high", "6");
-        req.add("copyPath", "random_number");
+        req.add("token", "0x514910771AF9Ca656af840dff83E8264EcF986CA");
+        req.addInt("times", 100);
+        //req.add("low", "1");
+        //req.add("high", "6");
+        //req.add("copyPath", "random_number");
         requestId = sendChainlinkRequestTo(chainlinkOracleAddress(), req, oraclePaymentAmount);
     }
 
