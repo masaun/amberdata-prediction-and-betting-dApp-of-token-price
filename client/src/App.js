@@ -101,6 +101,9 @@ class App extends Component {
                 if (responseEvents.length !== 0) {
                     break;
                 }
+
+                // Log of response
+                console.log('=== responseEvents（Log of response）===', responseEvents);
             }
             this.refreshState();
             this.setState({ message: "The result is delivered" });
