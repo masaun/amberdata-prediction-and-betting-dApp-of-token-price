@@ -153,7 +153,7 @@ class App extends Component {
                         <Header />
                         <Typography>
                             Loading Web3, accounts, and contract...
-          </Typography>
+                        </Typography>
                     </div>
                 </ThemeProvider>
             );
@@ -260,12 +260,12 @@ class App extends Component {
                         <Grid item xs={3}>
                             <Button variant="contained" color="primary" onClick={() => this.handleRequestResults()}>
                                 Request result
-                </Button>
+                            </Button>
                         </Grid>
                         <Grid item xs={3}>
                             <Button variant="contained" color="primary" onClick={() => this.handleWithdraw()}>
                                 Withdraw winnings
-              </Button>
+                            </Button>
                         </Grid>
                     </Grid>
 
