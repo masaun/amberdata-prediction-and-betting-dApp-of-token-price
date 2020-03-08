@@ -73,6 +73,7 @@ class App extends Component {
 
         // @dev - Amberdata
         const _currentPrice = await this.state.contract.methods.currentPrice().call();
+        console.log('=== _currentPrice ===', _currentPrice);
 
         var resultMessage;
         if (resultReceived) {
