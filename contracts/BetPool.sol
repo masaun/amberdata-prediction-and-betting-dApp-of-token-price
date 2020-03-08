@@ -106,11 +106,14 @@ contract BetPool is ChainlinkClient, Ownable{
     //     }
     // }
 
-    function fulfill(bytes32 _requestId, uint256 _price) public recordChainlinkFulfillment(_requestId) {
-        currentPrice = _price;
+    function fulfill(bytes32 _requestId, uint256 data) 
+    public 
+    recordChainlinkFulfillment(_requestId) 
+    {
+        currentPrice = data;
 
         resultReceived = true;
-        if (_price > 0) {
+        if (data > 0) {
             result = true;
         } else {
             result = false;
