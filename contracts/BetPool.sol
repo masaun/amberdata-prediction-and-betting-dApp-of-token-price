@@ -16,7 +16,7 @@ contract BetPool is ChainlinkClient, Ownable{
     bool public result;
 
     // @dev - Amberdata
-    uint256 constant private ORACLE_PAYMENT = 1 * LINK; // solium-disable-line zeppelin/no-arithmetic-operations
+    //uint256 constant private ORACLE_PAYMENT = 1 * LINK; // solium-disable-line zeppelin/no-arithmetic-operations
     uint256 public currentTokenPrice;
 
 
@@ -85,7 +85,7 @@ contract BetPool is ChainlinkClient, Ownable{
         req.add("extPath", concat("market/tokens/prices/", _tokenAddress, "/latest"));
         req.add("path", "payload.0.priceUSD");
         req.addInt("times", 100);
-        requestId = sendChainlinkRequestTo(chainlinkOracleAddress(), req, ORACLE_PAYMENT);
+        requestId = sendChainlinkRequestTo(chainlinkOracleAddress(), req, oraclePaymentAmount);
     }
 
 
