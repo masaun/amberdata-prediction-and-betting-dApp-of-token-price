@@ -16,7 +16,8 @@ contract BetPool is ChainlinkClient, Ownable{
     bool public result;
 
     // @dev - Amberdata
-    uint256 public currentPrice; 
+    uint256 constant private ORACLE_PAYMENT = 1 * LINK; // solium-disable-line zeppelin/no-arithmetic-operations
+    uint256 public currentTokenPrice;
 
 
     constructor(
@@ -66,18 +67,28 @@ contract BetPool is ChainlinkClient, Ownable{
 
     // You probably do not want onlyOwner here
     // But then, you need some mechanism to prevent people from spamming this
-    function requestResult() external returns (bytes32 requestId)  // @Notice - Remove a modifier of "onlyOwner"
-    //function requestResult() external onlyOwner returns (bytes32 requestId)
-    {
-        require(!resultReceived, "The result has already been received.");
-        Chainlink.Request memory req = buildChainlinkRequest(jobId, this, this.fulfill.selector);
-        req.add("token", "0x514910771AF9Ca656af840dff83E8264EcF986CA");
+    // function requestResult() external returns (bytes32 requestId)  // @Notice - Remove a modifier of "onlyOwner"
+    // {
+    //     require(!resultReceived, "The result has already been received.");
+    //     Chainlink.Request memory req = buildChainlinkRequest(jobId, this, this.fulfill.selector);
+    //     req.add("low", "1");
+    //     req.add("high", "6");
+    //     req.add("copyPath", "random_number");
+    //     requestId = sendChainlinkRequestTo(chainlinkOracleAddress(), req, oraclePaymentAmount);
+    // }
+
+    // @dev - Amberdata
+    function requestResult() external returns (bytes32 requestId) {
+        string memory _tokenAddress = "0x514910771AF9Ca656af840dff83E8264EcF986CA"; // LINK on mainnet
+
+        Chainlink.Request memory req = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
+        req.add("extPath", concat("market/tokens/prices/", _tokenAddress, "/latest"));
+        req.add("path", "payload.0.priceUSD");
         req.addInt("times", 100);
-        //req.add("low", "1");
-        //req.add("high", "6");
-        //req.add("copyPath", "random_number");
-        requestId = sendChainlinkRequestTo(chainlinkOracleAddress(), req, oraclePaymentAmount);
+        requestId = sendChainlinkRequestTo(chainlinkOracleAddress(), req, ORACLE_PAYMENT);
     }
+
+
 
     function getBetAmount(bool outcome) external view returns (uint256 betAmount)
     {
@@ -106,17 +117,23 @@ contract BetPool is ChainlinkClient, Ownable{
     //     }
     // }
 
-    function fulfill(bytes32 _requestId, uint256 data) 
-    public 
-    recordChainlinkFulfillment(_requestId) 
+    function fulfill(bytes32 _requestId, uint256 _price)
+    public
+    recordChainlinkFulfillment(_requestId)
     {
-        currentPrice = data;
+        currentTokenPrice = _price;
 
         resultReceived = true;
-        if (data > 0) {
+        if (_price > 0) {
             result = true;
         } else {
             result = false;
         }
+    }
+
+
+    // @dev - Amberdata
+    function concat(string memory a, string memory b, string memory c) private pure returns (string memory) {
+        return string(abi.encodePacked(a, b, c));
     }
 }
