@@ -11,7 +11,7 @@
   "author": "masaun",
   "license": "ISC",
   "dependencies": {
-    "chainlink": "^0.7.5",
+    "chainlink": "^0.8.2",
     "truffle-hdwallet-provider": "^1.0.17",
     "webpack": "4.41.0"
   }

@@ -72,12 +72,13 @@ class App extends Component {
         const result = await this.state.contract.methods.result().call();
 
         // @dev - Amberdata
-        const _currentPrice = await this.state.contract.methods.currentPrice().call();
+        const _currentTokenPrice = await this.state.contract.methods.currentTokenPrice().call();
+        console.log('=== _currentTokenPrice ===', _currentTokenPrice);
 
         var resultMessage;
         if (resultReceived) {
             if (result) {
-                resultMessage = _currentPrice;         // @dev - Amberdata
+                resultMessage = _currentTokenPrice;         // @dev - Amberdata
                 //resultMessage = "Result is 6";
             }
             else {
