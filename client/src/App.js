@@ -71,13 +71,18 @@ class App extends Component {
         const resultReceived = await this.state.contract.methods.resultReceived().call();
         const result = await this.state.contract.methods.result().call();
 
+        // @dev - Amberdata
+        const _currentPrice = await this.state.contract.methods.currentPrice().call();
+
         var resultMessage;
         if (resultReceived) {
             if (result) {
-                resultMessage = "Result is 6";
+                resultMessage = _currentPrice;         // @dev - Amberdata
+                //resultMessage = "Result is 6";
             }
             else {
-                resultMessage = "Result is not 6";
+                resultMessage = "Result is 0";         // @dev - Amberdata
+                //resultMessage = "Result is not 6";
             }
         }
         else {
@@ -101,6 +106,9 @@ class App extends Component {
                 if (responseEvents.length !== 0) {
                     break;
                 }
+
+                // Log of response
+                console.log('=== responseEvents（Log of response）===', responseEvents);
             }
             this.refreshState();
             this.setState({ message: "The result is delivered" });

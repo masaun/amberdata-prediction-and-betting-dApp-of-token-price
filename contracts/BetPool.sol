@@ -15,6 +15,9 @@ contract BetPool is ChainlinkClient, Ownable{
     bool public resultReceived;
     bool public result;
 
+    // @dev - Amberdata
+    uint256 public currentPrice; 
+
 
     constructor(
         address _link,
@@ -88,17 +91,28 @@ contract BetPool is ChainlinkClient, Ownable{
         }
     }
 
-    function fulfill(bytes32 _requestId, int256 data)
-    public
-    recordChainlinkFulfillment(_requestId)
-    {
+    // function fulfill(bytes32 _requestId, int256 data)
+    // public
+    // recordChainlinkFulfillment(_requestId)
+    // {
+    //     resultReceived = true;
+    //     if (data == 6)
+    //     {
+    //         result = true;
+    //     }
+    //     else
+    //     {
+    //         result = false;
+    //     }
+    // }
+
+    function fulfill(bytes32 _requestId, uint256 _price) public recordChainlinkFulfillment(_requestId) {
+        currentPrice = _price;
+
         resultReceived = true;
-        if (data == 6)
-        {
+        if (_price > 0) {
             result = true;
-        }
-        else
-        {
+        } else {
             result = false;
         }
     }
