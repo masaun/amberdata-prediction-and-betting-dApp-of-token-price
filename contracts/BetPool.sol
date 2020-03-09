@@ -3,7 +3,12 @@ pragma solidity 0.4.24;
 import "../node_modules/chainlink/contracts/ChainlinkClient.sol";
 import "../node_modules/openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
-contract BetPool is ChainlinkClient, Ownable{
+import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
+
+
+contract BetPool is ChainlinkClient, Ownable {
+    using SafeMath for uint256;
+
     mapping(address => uint256) private betsTrue;
     mapping(address => uint256) private betsFalse;
     uint256 public totalBetTrue;
@@ -19,6 +24,8 @@ contract BetPool is ChainlinkClient, Ownable{
     //uint256 constant private ORACLE_PAYMENT = 1 * LINK; // solium-disable-line zeppelin/no-arithmetic-operations
     uint256 public currentTokenPrice;
 
+    uint256 public predictedTokenPrice;
+
 
     constructor(
         address _link,
@@ -33,6 +40,8 @@ contract BetPool is ChainlinkClient, Ownable{
         setChainlinkOracle(_oracle);
         jobId = _jobId;
         oraclePaymentAmount = _oraclePaymentAmount;
+
+        predictedTokenPrice = 200;
     }
 
     function bet(bool betOutcome) external payable
@@ -53,7 +62,7 @@ contract BetPool is ChainlinkClient, Ownable{
     function withdraw() external
     {
         require(resultReceived, "You cannot withdraw before the result has been received.");
-        if (result)
+        if (result == true)
         {
             msg.sender.transfer(((totalBetTrue + totalBetFalse) * betsTrue[msg.sender]) / totalBetTrue);
             betsTrue[msg.sender] = 0;
@@ -79,10 +88,11 @@ contract BetPool is ChainlinkClient, Ownable{
 
     // @dev - Amberdata
     function requestResult() external returns (bytes32 requestId) {
-        string memory _tokenAddress = "0x514910771AF9Ca656af840dff83E8264EcF986CA"; // LINK on mainnet
+        string memory _tokenAddress = "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2"; // MKR token on mainnet
 
         Chainlink.Request memory req = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
         req.add("extPath", concat("market/tokens/prices/", _tokenAddress, "/latest"));
+        //req.add("path", "payload.0.priceETH");
         req.add("path", "payload.0.priceUSD");
         req.addInt("times", 100);
         requestId = sendChainlinkRequestTo(chainlinkOracleAddress(), req, oraclePaymentAmount);
@@ -124,11 +134,20 @@ contract BetPool is ChainlinkClient, Ownable{
         currentTokenPrice = _price;
 
         resultReceived = true;
-        if (_price > 0) {
+        
+        // if (_price > 0) {
+        //     result = true;
+        // } else {
+        //     result = false;
+        // }
+
+
+        // @dev - The condition of how to judge WIN or LOST
+        if (currentTokenPrice > 0) {
             result = true;
         } else {
             result = false;
-        }
+        }   
     }
 
 
