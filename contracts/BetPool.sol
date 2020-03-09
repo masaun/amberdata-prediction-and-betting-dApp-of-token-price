@@ -62,7 +62,7 @@ contract BetPool is ChainlinkClient, Ownable {
     function withdraw() external
     {
         require(resultReceived, "You cannot withdraw before the result has been received.");
-        if (result)
+        if (result == true)
         {
             msg.sender.transfer(((totalBetTrue + totalBetFalse) * betsTrue[msg.sender]) / totalBetTrue);
             betsTrue[msg.sender] = 0;
