@@ -88,7 +88,7 @@ contract BetPool is ChainlinkClient, Ownable {
 
     // @dev - Amberdata
     function requestResult() external returns (bytes32 requestId) {
-        string memory _tokenAddress = "0x514910771AF9Ca656af840dff83E8264EcF986CA"; // LINK on mainnet
+        string memory _tokenAddress = "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2"; // MKR token on mainnet
 
         Chainlink.Request memory req = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
         req.add("extPath", concat("market/tokens/prices/", _tokenAddress, "/latest"));
