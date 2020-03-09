@@ -3,7 +3,12 @@ pragma solidity 0.4.24;
 import "../node_modules/chainlink/contracts/ChainlinkClient.sol";
 import "../node_modules/openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
+import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
+
+
 contract BetPool is ChainlinkClient, Ownable {
+    using SafeMath for uint256;
+
     mapping(address => uint256) private betsTrue;
     mapping(address => uint256) private betsFalse;
     uint256 public totalBetTrue;
@@ -19,6 +24,8 @@ contract BetPool is ChainlinkClient, Ownable {
     //uint256 constant private ORACLE_PAYMENT = 1 * LINK; // solium-disable-line zeppelin/no-arithmetic-operations
     uint256 public currentTokenPrice;
 
+    uint256 public predictedTokenPrice;
+
 
     constructor(
         address _link,
@@ -33,6 +40,8 @@ contract BetPool is ChainlinkClient, Ownable {
         setChainlinkOracle(_oracle);
         jobId = _jobId;
         oraclePaymentAmount = _oraclePaymentAmount;
+
+        predictedTokenPrice = 200;
     }
 
     function bet(bool betOutcome) external payable
@@ -133,7 +142,7 @@ contract BetPool is ChainlinkClient, Ownable {
 
 
         // @dev - The condition of how to judge WIN or LOST
-        if (_predictedPrice.sub(1) < _predictedPrice < _predictedPrice.add(1)) {
+        if (currentTokenPrice > 0) {
             result = true;
         } else {
             result = false;
