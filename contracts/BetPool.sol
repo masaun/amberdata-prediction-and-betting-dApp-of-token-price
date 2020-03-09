@@ -3,7 +3,7 @@ pragma solidity 0.4.24;
 import "../node_modules/chainlink/contracts/ChainlinkClient.sol";
 import "../node_modules/openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
-contract BetPool is ChainlinkClient, Ownable{
+contract BetPool is ChainlinkClient, Ownable {
     mapping(address => uint256) private betsTrue;
     mapping(address => uint256) private betsFalse;
     uint256 public totalBetTrue;
@@ -124,11 +124,20 @@ contract BetPool is ChainlinkClient, Ownable{
         currentTokenPrice = _price;
 
         resultReceived = true;
-        if (_price > 0) {
+        
+        // if (_price > 0) {
+        //     result = true;
+        // } else {
+        //     result = false;
+        // }
+
+
+        // @dev - The condition of how to judge WIN or LOST
+        if (_predictedPrice.sub(1) < _predictedPrice < _predictedPrice.add(1)) {
             result = true;
         } else {
             result = false;
-        }
+        }   
     }
 
 
