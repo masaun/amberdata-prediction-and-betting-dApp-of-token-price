@@ -59,20 +59,18 @@ contract BetPool is ChainlinkClient, Ownable {
         }
     }
 
-    function withdraw() external
+    function getBetAmount(bool outcome) external view returns (uint256 betAmount)
     {
-        require(resultReceived, "You cannot withdraw before the result has been received.");
-        if (result == true)
+        if (outcome)
         {
-            msg.sender.transfer(((totalBetTrue + totalBetFalse) * betsTrue[msg.sender]) / totalBetTrue);
-            betsTrue[msg.sender] = 0;
+            betAmount = betsTrue[msg.sender];
         }
         else
         {
-            msg.sender.transfer(((totalBetTrue + totalBetFalse) * betsFalse[msg.sender]) / totalBetFalse);
-            betsFalse[msg.sender] = 0;
+            betAmount = betsFalse[msg.sender];
         }
     }
+
 
     // You probably do not want onlyOwner here
     // But then, you need some mechanism to prevent people from spamming this
@@ -86,31 +84,20 @@ contract BetPool is ChainlinkClient, Ownable {
     //     requestId = sendChainlinkRequestTo(chainlinkOracleAddress(), req, oraclePaymentAmount);
     // }
 
+
     // @dev - Amberdata
     function requestResult() external returns (bytes32 requestId) {
         string memory _tokenAddress = "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2"; // MKR token on mainnet
 
         Chainlink.Request memory req = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
+
         req.add("extPath", concat("market/tokens/prices/", _tokenAddress, "/latest"));
-        //req.add("path", "payload.0.priceETH");
         req.add("path", "payload.0.priceUSD");
         req.addInt("times", 100);
+        
         requestId = sendChainlinkRequestTo(chainlinkOracleAddress(), req, oraclePaymentAmount);
     }
 
-
-
-    function getBetAmount(bool outcome) external view returns (uint256 betAmount)
-    {
-        if (outcome)
-        {
-            betAmount = betsTrue[msg.sender];
-        }
-        else
-        {
-            betAmount = betsFalse[msg.sender];
-        }
-    }
 
     // function fulfill(bytes32 _requestId, int256 data)
     // public
@@ -126,6 +113,7 @@ contract BetPool is ChainlinkClient, Ownable {
     //         result = false;
     //     }
     // }
+
 
     function fulfill(bytes32 _requestId, uint256 _price)
     public
@@ -148,6 +136,22 @@ contract BetPool is ChainlinkClient, Ownable {
         } else {
             result = false;
         }   
+    }
+
+
+    function withdraw() external
+    {
+        require(resultReceived, "You cannot withdraw before the result has been received.");
+        if (result == true)
+        {
+            msg.sender.transfer(((totalBetTrue + totalBetFalse) * betsTrue[msg.sender]) / totalBetTrue);
+            betsTrue[msg.sender] = 0;
+        }
+        else
+        {
+            msg.sender.transfer(((totalBetTrue + totalBetFalse) * betsFalse[msg.sender]) / totalBetFalse);
+            betsFalse[msg.sender] = 0;
+        }
     }
 
 
