@@ -79,7 +79,7 @@ class App extends Component {
         var resultMessage;
         if (resultReceived) {
             if (result) {
-                resultMessage = _currentTokenPrice;         // @dev - Amberdata
+                resultMessage = currentTokenPrice;         // @dev - Amberdata
                 //resultMessage = "Result is 6";
             }
             else {
@@ -184,7 +184,6 @@ class App extends Component {
                         Oracle is going to return a number between 1 and 6
                     </Typography>
                     <Typography variant="h5" style={{ marginTop: 32 }}>
-                        {this.state.currentTokenPrice}
                         {this.state.resultMessage}
                     </Typography>
 
