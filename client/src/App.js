@@ -73,7 +73,8 @@ class App extends Component {
 
         // @dev - Amberdata
         const _currentTokenPrice = await this.state.contract.methods.currentTokenPrice().call();
-        console.log('=== _currentTokenPrice ===', _currentTokenPrice);
+        const currentTokenPrice = _currentTokenPrice / 100
+        console.log('=== currentTokenPrice ===', currentTokenPrice);
 
         var resultMessage;
         if (resultReceived) {
@@ -90,7 +91,7 @@ class App extends Component {
             resultMessage = "Result has not been received yet";
         }
 
-        this.setState({ totalBetTrue, totalBetFalse, myBetTrue, myBetFalse, resultReceived, result, resultMessage });
+        this.setState({ totalBetTrue, totalBetFalse, myBetTrue, myBetFalse, resultReceived, result, resultMessage, _currentTokenPrice });
     }
 
     handleUpdateForm = (name, value) => {
@@ -183,6 +184,7 @@ class App extends Component {
                         Oracle is going to return a number between 1 and 6
                     </Typography>
                     <Typography variant="h5" style={{ marginTop: 32 }}>
+                        {this.state.currentTokenPrice}
                         {this.state.resultMessage}
                     </Typography>
 
