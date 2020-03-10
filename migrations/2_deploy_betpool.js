@@ -7,9 +7,9 @@ const oracle = "0xc99B3D447826532722E41bc36e644ba3479E4365";         // Oracle a
 
 //const jobId = web3.utils.toHex("447f3b6fac1240ab91d3679fba00baf6");   // [Old]：Job ID of Amberdata Chainlink (Testnet) on Ropsten
 
-//const jobId = web3.utils.toHex("6b0a1ab2ce554465930aceaa79bb4346");  // bytes32
-const jobId = web3.utils.toHex("af1e4a16f44a41d08a9c1eb360595335");  // int256
-//const jobId = web3.utils.toHex("76df5967ddf64011930d20ac29b5f463");  // uint256
+//const jobId = web3.utils.toHex("6b0a1ab2ce554465930aceaa79bb4346");  // Job ID - bytes32
+const jobId = web3.utils.toHex("af1e4a16f44a41d08a9c1eb360595335");    // Job ID - int256
+//const jobId = web3.utils.toHex("76df5967ddf64011930d20ac29b5f463");  // Job ID - uint256
 
 
 /***
