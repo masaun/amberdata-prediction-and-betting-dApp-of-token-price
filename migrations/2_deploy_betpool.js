@@ -5,9 +5,11 @@ const linkTokenAddress = "0x20fE562d797A42Dcb3399062AE9546cd06f63280";
 const oracle = "0xc99B3D447826532722E41bc36e644ba3479E4365";         // Oracle address of Amberdata Chainlink (Testnet) on Ropsten
 //const oracle = "0x4a3fbbb385b5efeb4bc84a25aaadcd644bd09721";
 
-//const jobId = web3.utils.toHex("447f3b6fac1240ab91d3679fba00baf6");   // Job ID of Amberdata Chainlink (Testnet) on Ropsten / Old
-const jobId = web3.utils.toHex("6b0a1ab2ce554465930aceaa79bb4346");     // Job ID of Amberdata Chainlink (Testnet) on Ropsten / New
-//const jobId = web3.utils.toHex("d02b14632b6141ec90bb8b2b9b937848");
+//const jobId = web3.utils.toHex("447f3b6fac1240ab91d3679fba00baf6");   // [Old]：Job ID of Amberdata Chainlink (Testnet) on Ropsten
+
+//const jobId = web3.utils.toHex("6b0a1ab2ce554465930aceaa79bb4346");  // bytes32
+const jobId = web3.utils.toHex("af1e4a16f44a41d08a9c1eb360595335");  // int256
+//const jobId = web3.utils.toHex("76df5967ddf64011930d20ac29b5f463");  // uint256
 
 
 /***

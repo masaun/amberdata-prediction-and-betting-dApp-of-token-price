@@ -93,12 +93,9 @@ contract BetPool is ChainlinkClient, Ownable {
         Chainlink.Request memory req = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
         //Chainlink.Request memory req = buildChainlinkRequest(_jobId, address(this), this.fulfill.selector);
 
-        req.add("token", "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2");
+        req.add("extPath", concat("market/tokens/prices/", _tokenAddress, "/latest"));
+        req.add("path", "payload.0.priceUSD");
         req.addInt("times", 100);
-
-        //req.add("extPath", concat("market/tokens/prices/", _tokenAddress, "/latest"));
-        //req.add("path", "payload.0.priceUSD");
-        //req.addInt("times", 100);
         
         requestId = sendChainlinkRequestTo(chainlinkOracleAddress(), req, oraclePaymentAmount);
         //requestId = sendChainlinkRequestTo(_oracle, req, oraclePaymentAmount);
