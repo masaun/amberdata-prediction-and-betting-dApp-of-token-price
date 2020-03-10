@@ -101,7 +101,15 @@ class App extends Component {
         const lastBlock = await this.state.web3.eth.getBlock("latest");
         this.setState({ message: "Requesting the result from the oracle..." });
         try {
-            await this.state.contract.methods.requestResult().send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
+            // @dev - Specify argument
+            const _oracle = '0xc99B3D447826532722E41bc36e644ba3479E4365'; 
+            const _jobId = '6b0a1ab2ce554465930aceaa79bb4346';
+            const _tokenAddress = '0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2'; // MKR token on mainnet
+
+            //@dev - Execute send request
+            await this.state.contract.methods.requestResult(_oracle, _jobId, _tokenAddress).send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
+            //await this.state.contract.methods.requestResult().send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
+            
             while (true) {
                 const responseEvents = await this.state.contract.getPastEvents('ChainlinkFulfilled', { fromBlock: lastBlock.number, toBlock: 'latest' });
                 if (responseEvents.length !== 0) {
