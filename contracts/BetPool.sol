@@ -84,6 +84,7 @@ contract BetPool is ChainlinkClient, Ownable {
     //     requestId = sendChainlinkRequestTo(chainlinkOracleAddress(), req, oraclePaymentAmount);
     // }
 
+
     // @dev - Amberdata
     function requestResult() external returns (bytes32 requestId) {
     //function requestResult(address _oracle, bytes32 _jobId, string _tokenAddress) external returns (bytes32 requestId) {
@@ -92,12 +93,12 @@ contract BetPool is ChainlinkClient, Ownable {
         Chainlink.Request memory req = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
         //Chainlink.Request memory req = buildChainlinkRequest(_jobId, address(this), this.fulfill.selector);
 
-        req.add("extPath", concat("market/tokens/prices/", _tokenAddress, "/latest"));
-        //req.add("path", "payload.0.priceETH");
-        req.add("path", "payload.0.priceUSD");
-        //req.add("path", "payload.0.weeklyPercentChangeUSD");
+        req.add("token", "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2");
         req.addInt("times", 100);
-        //req.addInt("times", 10000000000000000);
+
+        //req.add("extPath", concat("market/tokens/prices/", _tokenAddress, "/latest"));
+        //req.add("path", "payload.0.priceUSD");
+        //req.addInt("times", 100);
         
         requestId = sendChainlinkRequestTo(chainlinkOracleAddress(), req, oraclePaymentAmount);
         //requestId = sendChainlinkRequestTo(_oracle, req, oraclePaymentAmount);
