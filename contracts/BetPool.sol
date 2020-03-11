@@ -97,11 +97,17 @@ contract BetPool is ChainlinkClient, Ownable {
         string memory _tokenAddress = "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2"; // MKR token on mainnet
 
         // @dev - Using int256 as JobID of data-type  
-        Chainlink.Request memory req = buildChainlinkRequest(jobId_2, address(this), this.fulfill.selector);
-        req.add("extPath", concat("market/tokens/prices/", _tokenAddress, "/latest"));
-        req.add("path", "payload.0.priceUSD");
-        req.addInt("times", 100);
+        // Chainlink.Request memory req = buildChainlinkRequest(jobId_2, address(this), this.fulfill.selector);
+        // req.add("extPath", concat("market/tokens/prices/", _tokenAddress, "/latest"));
+        // req.add("path", "payload.0.priceUSD");
+        // req.addInt("times", 100);
         
+        // @dev - Get historical token price data
+        Chainlink.Request memory req = buildChainlinkRequest(jobId_2, address(this), this.fulfill.selector);
+        req.add("extPath", concat("market/tokens/prices/", _tokenAddress, "/historical"));
+        req.add("path", "payload.data.30.1");  // Latest
+        req.addInt("times", 100);
+
         requestId = sendChainlinkRequestTo(chainlinkOracleAddress(), req, oraclePaymentAmount);
     }
 
