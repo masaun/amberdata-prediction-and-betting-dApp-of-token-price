@@ -7,9 +7,9 @@ const oracle = "0xc99B3D447826532722E41bc36e644ba3479E4365";         // Oracle a
 
 //const jobId = web3.utils.toHex("447f3b6fac1240ab91d3679fba00baf6");   // [Old]：Job ID of Amberdata Chainlink (Testnet) on Ropsten
 
-//const jobId = web3.utils.toHex("6b0a1ab2ce554465930aceaa79bb4346");  // Job ID - bytes32
-const jobId = web3.utils.toHex("af1e4a16f44a41d08a9c1eb360595335");    // Job ID - int256
-//const jobId = web3.utils.toHex("76df5967ddf64011930d20ac29b5f463");  // Job ID - uint256
+const jobId_1 = web3.utils.toHex("6b0a1ab2ce554465930aceaa79bb4346");  // Job ID - bytes32
+const jobId_2 = web3.utils.toHex("af1e4a16f44a41d08a9c1eb360595335");  // Job ID - int256
+const jobId_3 = web3.utils.toHex("76df5967ddf64011930d20ac29b5f463");  // Job ID - uint256
 
 
 /***
@@ -20,7 +20,7 @@ const paymentAmount = web3.utils.toWei("0.1");
 
 
 module.exports = async function (deployer) {
-    await deployer.deploy(BetPool, linkTokenAddress, oracle, jobId, paymentAmount);
+    await deployer.deploy(BetPool, linkTokenAddress, oracle, jobId_1, jobId_2, jobId_3, paymentAmount);
     const betPool = await BetPool.deployed();
 
     const linkToken = await LinkTokenInterface.at(linkTokenAddress);
