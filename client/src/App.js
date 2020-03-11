@@ -73,12 +73,13 @@ class App extends Component {
 
         // @dev - Amberdata
         const _currentTokenPrice = await this.state.contract.methods.currentTokenPrice().call();
-        console.log('=== _currentTokenPrice ===', _currentTokenPrice);
+        const currentTokenPrice = _currentTokenPrice / 100
+        console.log('=== currentTokenPrice ===', currentTokenPrice);
 
         var resultMessage;
         if (resultReceived) {
             if (result) {
-                resultMessage = _currentTokenPrice;         // @dev - Amberdata
+                resultMessage = currentTokenPrice;         // @dev - Amberdata
                 //resultMessage = "Result is 6";
             }
             else {
@@ -90,7 +91,7 @@ class App extends Component {
             resultMessage = "Result has not been received yet";
         }
 
-        this.setState({ totalBetTrue, totalBetFalse, myBetTrue, myBetFalse, resultReceived, result, resultMessage });
+        this.setState({ totalBetTrue, totalBetFalse, myBetTrue, myBetFalse, resultReceived, result, resultMessage, _currentTokenPrice });
     }
 
     handleUpdateForm = (name, value) => {

@@ -15,7 +15,10 @@ contract BetPool is ChainlinkClient, Ownable {
     uint256 public totalBetFalse;
 
     uint256 private oraclePaymentAmount;
-    bytes32 private jobId;
+    
+    bytes32 private jobId_1;  // Job ID - bytes32
+    bytes32 private jobId_2;  // Job ID - int256
+    bytes32 private jobId_3;  // Job ID - uint256
 
     bool public resultReceived;
     bool public result;
@@ -30,7 +33,9 @@ contract BetPool is ChainlinkClient, Ownable {
     constructor(
         address _link,
         address _oracle,
-        bytes32 _jobId,
+        bytes32 _jobId_1,  // Job ID - bytes32
+        bytes32 _jobId_2,  // Job ID - int256
+        bytes32 _jobId_3,  // Job ID - uint256
         uint256 _oraclePaymentAmount
         )
     Ownable()
@@ -38,7 +43,9 @@ contract BetPool is ChainlinkClient, Ownable {
     {
         setChainlinkToken(_link);
         setChainlinkOracle(_oracle);
-        jobId = _jobId;
+        jobId_1 = _jobId_1;  // Job ID - bytes32
+        jobId_2 = _jobId_2;  // Job ID - int256
+        jobId_3 = _jobId_3;  // Job ID - uint256
         oraclePaymentAmount = _oraclePaymentAmount;
 
         predictedTokenPrice = 200;
@@ -89,7 +96,7 @@ contract BetPool is ChainlinkClient, Ownable {
     function requestResult() external returns (bytes32 requestId) {
         string memory _tokenAddress = "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2"; // MKR token on mainnet
 
-        Chainlink.Request memory req = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
+        Chainlink.Request memory req = buildChainlinkRequest(jobId_2, address(this), this.fulfill.selector);
 
         req.add("extPath", concat("market/tokens/prices/", _tokenAddress, "/latest"));
         req.add("path", "payload.0.priceUSD");
