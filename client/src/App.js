@@ -181,10 +181,7 @@ class App extends Component {
                 <div className="App">
                     <Header />
                     <Typography variant="h5" style={{ marginTop: 32 }}>
-                        Oracle is going to return a number between 1 and 6
-                    </Typography>
-                    <Typography variant="h5" style={{ marginTop: 32 }}>
-                        {this.state.resultMessage}
+                        [Topic of prediction]：Is Token price of MKR going to exceed 520 USD or not tomorrow?
                     </Typography>
 
                     <Grid container style={{ marginTop: 32 }}>
@@ -195,12 +192,12 @@ class App extends Component {
                         </Grid>
                         <Grid item xs={3}>
                             <Typography variant="h5">
-                                6
+                                520 USD or more
                             </Typography>
                         </Grid>
                         <Grid item xs={3}>
                             <Typography variant="h5">
-                                Not 6
+                                Less than 520 USD
                             </Typography>
                         </Grid>
                     </Grid>
@@ -271,6 +268,15 @@ class App extends Component {
                             </Button>
                         </Grid>
                     </Grid>
+
+                    <hr />
+
+                    <Typography variant="h5" style={{ marginTop: 32 }}>
+                        Oracle is going to return the result of token price of MKR
+                    </Typography>
+                    <Typography variant="h5" style={{ marginTop: 32 }}>
+                        {this.state.resultMessage}
+                    </Typography>
 
                     <Grid container style={{ marginTop: 32 }}>
                         <Grid item xs={3}>
