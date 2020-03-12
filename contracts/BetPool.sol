@@ -101,6 +101,7 @@ contract BetPool is ChainlinkClient, Ownable {
         Chainlink.Request memory req = buildChainlinkRequest(jobId_3, address(this), this.fulfillTimeStampLatest.selector);
         req.add("extPath", concat("market/tokens/prices/", _tokenAddress, "/historical"));
         req.add("path", "payload.data.30.0");  // Timestamp of Latest
+        req.addInt("times", 10);       // Specify getting value of timestamp until 10 digits
         //req.addInt("times", 1000000000);       // Specify getting value of timestamp until 10 digits
 
         requestId = sendChainlinkRequestTo(chainlinkOracleAddress(), req, oraclePaymentAmount);        
