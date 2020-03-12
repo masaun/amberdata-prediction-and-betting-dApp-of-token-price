@@ -277,6 +277,9 @@ class App extends Component {
                     </Grid>
 
                     <hr />
+                    <Typography variant="h5" style={{ marginTop: 32 }}>
+                        [Notice]： Users could not requestResult until tomorrow（0:00 AM of GMT tomorrow）
+                    </Typography>
 
                     <Typography variant="h5" style={{ marginTop: 32 }}>
                         Oracle is going to return the result of token price of MKR
