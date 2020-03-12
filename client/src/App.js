@@ -111,6 +111,24 @@ class App extends Component {
         // @dev - Execute send request of timestamp latest
         await this.state.contract.methods.requestResultTimeStampLatest().send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
 
+        // @dev - availableTimeToRequestResult is plus 1 day
+        var availableTimeToRequestResult = this.state.timeStampLatest + 86400;
+        var date = new Date();
+        var a = date.getTime();
+        var currentTime = Math.floor(a / 1000);
+
+        // @dev - Condition whether it execute requestResult() function or not
+        if (currentTime < availableTimtToRequestResult) {
+            // execute
+        } else {
+            this.setState({ message: "You could not request result until tomorrow" });
+        }
+
+
+        /////////////////////////////////////////
+        /// @dev - Original codes below 
+        /////////////////////////////////////////
+        // @dev - Get result of prediction
         const lastBlock = await this.state.web3.eth.getBlock("latest");
         this.setState({ message: "Requesting the result from the oracle..." });
         try {
