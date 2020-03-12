@@ -112,10 +112,10 @@ class App extends Component {
         await this.state.contract.methods.requestResultTimeStampLatest().send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
 
         // @dev - availableTimeToRequestResult is plus 1 day
-        var availableTimeToRequestResult = this.state.timeStampLatest + 86400;
-        var date = new Date();
-        var a = date.getTime();
-        var currentTime = Math.floor(a / 1000);
+        var availableTimeToRequestResult = await this.state.timeStampLatest + 86400;
+        var date = await new Date();
+        var a = await date.getTime();
+        var currentTime = await Math.floor(a / 1000);
 
         // @dev - Condition whether it execute requestResult() function or not
         if (currentTime < availableTimeToRequestResult) {
