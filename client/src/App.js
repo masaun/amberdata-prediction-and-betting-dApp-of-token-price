@@ -118,7 +118,7 @@ class App extends Component {
         var currentTime = Math.floor(a / 1000);
 
         // @dev - Condition whether it execute requestResult() function or not
-        if (currentTime < availableTimtToRequestResult) {
+        if (currentTime < availableTimeToRequestResult) {
             // execute
             const lastBlock = await this.state.web3.eth.getBlock("latest");
             this.setState({ message: "Requesting the result from the oracle..." });
