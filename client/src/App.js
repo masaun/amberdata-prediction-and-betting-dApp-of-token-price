@@ -143,7 +143,7 @@ class App extends Component {
                 this.setState({ message: "Failed getting the result" });
             }
         } else {
-            this.setState({ message: "You could not request result until tomorrow" });
+            this.setState({ message: "[Validation Message]：You could not request result until tomorrow" });
         }
 
 
