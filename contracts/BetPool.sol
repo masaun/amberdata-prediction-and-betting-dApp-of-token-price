@@ -27,7 +27,9 @@ contract BetPool is ChainlinkClient, Ownable {
     //uint256 constant private ORACLE_PAYMENT = 1 * LINK; // solium-disable-line zeppelin/no-arithmetic-operations
     uint256 public currentTokenPrice;
 
-    uint256 public predictedTokenPrice;
+    bool public resultReceivedTimeStampLatest;
+    bool public resultTimeStampLatest;
+    uint256 public timeStampLatest;
 
 
     constructor(
@@ -47,8 +49,6 @@ contract BetPool is ChainlinkClient, Ownable {
         jobId_2 = _jobId_2;  // Job ID - int256
         jobId_3 = _jobId_3;  // Job ID - uint256
         oraclePaymentAmount = _oraclePaymentAmount;
-
-        predictedTokenPrice = 200;
     }
 
     function bet(bool betOutcome) external payable
@@ -93,6 +93,21 @@ contract BetPool is ChainlinkClient, Ownable {
 
 
     // @dev - Amberdata
+    // @dev - Get timestamp of latest
+    function requestResultTimeStampLatest() external returns (bytes32 requestId) {
+        string memory _tokenAddress = "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2"; // MKR token on mainnet
+
+        // @dev - Get historical token price data
+        Chainlink.Request memory req = buildChainlinkRequest(jobId_3, address(this), this.fulfillTimeStampLatest.selector);
+        req.add("extPath", concat("market/tokens/prices/", _tokenAddress, "/historical"));
+        req.add("path", "payload.data.30.0");  // Timestamp of Latest
+        req.addInt("times", 1000000000);       // Specify getting value of timestamp until 10 digits
+
+        requestId = sendChainlinkRequestTo(chainlinkOracleAddress(), req, oraclePaymentAmount);        
+    }
+    
+
+    // @dev - Amberdata
     function requestResult() external returns (bytes32 requestId) {
         string memory _tokenAddress = "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2"; // MKR token on mainnet
 
@@ -126,6 +141,14 @@ contract BetPool is ChainlinkClient, Ownable {
     //         result = false;
     //     }
     // }
+
+
+    function fulfillTimeStampLatest(bytes32 _requestId, uint256 _timestamp)
+    public
+    recordChainlinkFulfillment(_requestId)
+    {
+        timeStampLatest = _timestamp;
+    }
 
 
     function fulfill(bytes32 _requestId, uint256 _price)

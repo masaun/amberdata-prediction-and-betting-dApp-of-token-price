@@ -76,6 +76,15 @@ class App extends Component {
         const currentTokenPrice = _currentTokenPrice / 100
         console.log('=== currentTokenPrice ===', currentTokenPrice);
 
+
+        // @dev - Get timestamp latest
+        const requestResultTimeStampLatest = await this.state.contract.methods.requestResultTimeStampLatest().call();
+
+        const _timeStampLatest = await this.state.contract.methods.timeStampLatest().call(); 
+        const timeStampLatest = _timeStampLatest;
+        console.log('=== timeStampLatest ===', timeStampLatest);
+
+
         var resultMessage;
         if (resultReceived) {
             if (result) {
@@ -98,16 +107,14 @@ class App extends Component {
         this.setState({ [name]: value });
     }
 
-    handleRequestResults = async () => {
+    handleRequestResults = async () => {    
         const lastBlock = await this.state.web3.eth.getBlock("latest");
         this.setState({ message: "Requesting the result from the oracle..." });
         try {
-            // @dev - Specify argument
-            //const _oracle = '0xc99B3D447826532722E41bc36e644ba3479E4365';                          // Oracle address of Amberdata Chainlink (Testnet) on Ropsten
-            //const _jobId = await this.state.web3.utils.toHex('6b0a1ab2ce554465930aceaa79bb4346');  // Job ID of Amberdata Chainlink (Testnet) on Ropsten / New
-            //const _tokenAddress = '0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2';                    // MKR token on mainnet
+            // @dev - Execute send request of timestamp latest
+            await this.state.contract.methods.requestResultTimeStampLatest().send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
 
-            //@dev - Execute send request
+            // @dev - Execute send request
             await this.state.contract.methods.requestResult().send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
             //await this.state.contract.methods.requestResult(_oracle, _jobId, _tokenAddress).send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
 
