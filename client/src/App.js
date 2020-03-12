@@ -107,13 +107,13 @@ class App extends Component {
         this.setState({ [name]: value });
     }
 
-    handleRequestResults = async () => {    
+    handleRequestResults = async () => {
+        // @dev - Execute send request of timestamp latest
+        await this.state.contract.methods.requestResultTimeStampLatest().send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
+
         const lastBlock = await this.state.web3.eth.getBlock("latest");
         this.setState({ message: "Requesting the result from the oracle..." });
         try {
-            // @dev - Execute send request of timestamp latest
-            await this.state.contract.methods.requestResultTimeStampLatest().send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
-
             // @dev - Execute send request
             await this.state.contract.methods.requestResult().send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
             //await this.state.contract.methods.requestResult(_oracle, _jobId, _tokenAddress).send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
