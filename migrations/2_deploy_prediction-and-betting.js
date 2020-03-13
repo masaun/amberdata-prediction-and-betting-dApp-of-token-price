@@ -1,4 +1,4 @@
-const BetPool = artifacts.require("BetPool");
+const PredictionAndBetting = artifacts.require("PredictionAndBetting");
 const LinkTokenInterface = artifacts.require("LinkTokenInterface");
 
 const linkTokenAddress = "0x20fE562d797A42Dcb3399062AE9546cd06f63280";
@@ -20,9 +20,9 @@ const paymentAmount = web3.utils.toWei("0.1");
 
 
 module.exports = async function (deployer) {
-    await deployer.deploy(BetPool, linkTokenAddress, oracle, jobId_1, jobId_2, jobId_3, paymentAmount);
-    const betPool = await BetPool.deployed();
+    await deployer.deploy(PredictionAndBetting, linkTokenAddress, oracle, jobId_1, jobId_2, jobId_3, paymentAmount);
+    const predictionAndBetting = await PredictionAndBetting.deployed();
 
     const linkToken = await LinkTokenInterface.at(linkTokenAddress);
-    await linkToken.transfer(betPool.address, paymentAmount);
+    await linkToken.transfer(predictionAndBetting.address, paymentAmount);
 };

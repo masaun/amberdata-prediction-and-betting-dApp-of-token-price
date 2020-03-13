@@ -20,12 +20,12 @@ export default function Header() {
         <Toolbar>
           <Grid item xs>
             <Typography variant="h6" color="inherit">
-              Bet Pool dApp
+              Prediction and Betting dApp of Token Price
             </Typography>
           </Grid>
           <Grid item xs>
-            <Typography variant="h6" color="inherit">
-              Betting on Oracle Data
+            <Typography variant="h10" color="inherit">
+              Created by Amberdata.io and Chainlink Oracle
             </Typography>
           </Grid>
         </Toolbar>

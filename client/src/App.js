@@ -3,7 +3,7 @@ import { Button, Typography, Grid, TextField } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 
 // Artifact files of contracts
-import BetPool from "./contracts/BetPool.json";
+import PredictionAndBetting from "./contracts/PredictionAndBetting.json";
 
 // Related to web3 provider
 import getWeb3 from "./utils/getWeb3";
@@ -31,9 +31,9 @@ class App extends Component {
             if (networkId !== 3) {
                 throw new Error("Select the Ropsten network from your MetaMask plugin");
             }
-            const deployedNetwork = BetPool.networks[networkId];
+            const deployedNetwork = PredictionAndBetting.networks[networkId];
             const contract = new web3.eth.Contract(
-                BetPool.abi,
+                PredictionAndBetting.abi,
                 deployedNetwork && deployedNetwork.address,
             );
 
@@ -145,7 +145,7 @@ class App extends Component {
                 this.setState({ message: "Failed getting the result" });
             }
         } else {
-            await this.setState({ message: "[Validation Message]：You could not request result until tomorrow" });
+            await this.setState({ message: "[Warning Message]：You could not request result until tomorrow" });
         }
 
 
@@ -308,17 +308,20 @@ class App extends Component {
                         </Grid>
                         <Grid item xs={3}>
                             <Button variant="contained" color="primary" onClick={() => this.handleBet("true")}>
-                                Bet on 6
+                                Bet on "520 USD or more"
                             </Button>
                         </Grid>
                         <Grid item xs={3}>
                             <Button variant="contained" color="primary" onClick={() => this.handleBet("false")}>
-                                Bet on not 6
+                                Bet on "Less than 520 USD"
                             </Button>
                         </Grid>
                     </Grid>
 
+                    <br />
+
                     <hr />
+
                     <Typography variant="h5" style={{ marginTop: 32 }}>
                         [Notice]： Users could not requestResult until tomorrow（0:00 AM of GMT tomorrow）
                     </Typography>
@@ -331,23 +334,33 @@ class App extends Component {
                     </Typography>
 
                     <Grid container style={{ marginTop: 32 }}>
-                        <Grid item xs={3}>
+                        <Grid item xs={4}>
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item xs={4}>
                             <Button variant="contained" color="primary" onClick={() => this.handleRequestResults()}>
                                 Request result
                             </Button>
                         </Grid>
-                        <Grid item xs={3}>
-                            <Button variant="contained" color="primary" onClick={() => this.handleWithdraw()}>
-                                Withdraw winnings
-                            </Button>
+                        <Grid item xs={4}>
                         </Grid>
                     </Grid>
 
                     <Typography variant="h5" style={{ marginTop: 32 }}>
                         {this.state.message}
                     </Typography>
+
+
+                    <Grid container style={{ marginTop: 32 }}>
+                        <Grid item xs={4}>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Button variant="contained" color="primary" onClick={() => this.handleWithdraw()}>
+                                Withdraw winnings
+                            </Button>
+                        </Grid>
+                        <Grid item xs={4}>
+                        </Grid>
+                    </Grid>
 
                 </div>
             </ThemeProvider>
