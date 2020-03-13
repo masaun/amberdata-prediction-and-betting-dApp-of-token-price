@@ -1,6 +1,12 @@
 # Prediction and Betting dApp of Token Price（by using Amberdata.io and Chainlink Oracle）
 ## Introduction of Prediction and Betting dApp of Token Price
 - Prediction and Betting dApp of Token Price is a decentrailized application which is created by Amberdata.io and Chainlink Oracle.
+- In this dApp, users predict token price of `MKR` token.
+  - Token address of MKR： `"0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2"`
+  - Metrix of MKR： https://amberdata.io/addresses/0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2/metrics
+
+<br>
+
 - Prediction and Betting dApp of Token Price works on Ropsten Testnet right now.
 
 
