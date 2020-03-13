@@ -308,12 +308,12 @@ class App extends Component {
                         </Grid>
                         <Grid item xs={3}>
                             <Button variant="contained" color="primary" onClick={() => this.handleBet("true")}>
-                                Bet on 6
+                                Bet on "520 USD or more"
                             </Button>
                         </Grid>
                         <Grid item xs={3}>
                             <Button variant="contained" color="primary" onClick={() => this.handleBet("false")}>
-                                Bet on not 6
+                                Bet on "Less than 520 USD"
                             </Button>
                         </Grid>
                     </Grid>
