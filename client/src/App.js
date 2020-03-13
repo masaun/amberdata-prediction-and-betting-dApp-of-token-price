@@ -113,9 +113,11 @@ class App extends Component {
 
         // @dev - availableTimeToRequestResult is plus 1 day
         var availableTimeToRequestResult = await this.state.timeStampLatest + 86400;
+
         var date = await new Date();
         var a = await date.getTime();
-        var currentTime = await Math.floor(a / 1000);
+        //var currentTime = await Math.floor(a / 1000);
+        var currentTime = await this.state.timeStampLatest + 1; // For test
 
         // @dev - Condition whether it execute requestResult() function or not
         if (currentTime < availableTimeToRequestResult) {
