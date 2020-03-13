@@ -145,7 +145,7 @@ class App extends Component {
                 this.setState({ message: "Failed getting the result" });
             }
         } else {
-            await this.setState({ message: "[Validation Message]：You could not request result until tomorrow" });
+            await this.setState({ message: "[Warning Message]：You could not request result until tomorrow" });
         }
 
 
@@ -318,7 +318,10 @@ class App extends Component {
                         </Grid>
                     </Grid>
 
+                    <br />
+
                     <hr />
+
                     <Typography variant="h5" style={{ marginTop: 32 }}>
                         [Notice]： Users could not requestResult until tomorrow（0:00 AM of GMT tomorrow）
                     </Typography>
@@ -331,23 +334,33 @@ class App extends Component {
                     </Typography>
 
                     <Grid container style={{ marginTop: 32 }}>
-                        <Grid item xs={3}>
+                        <Grid item xs={4}>
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item xs={4}>
                             <Button variant="contained" color="primary" onClick={() => this.handleRequestResults()}>
                                 Request result
                             </Button>
                         </Grid>
-                        <Grid item xs={3}>
-                            <Button variant="contained" color="primary" onClick={() => this.handleWithdraw()}>
-                                Withdraw winnings
-                            </Button>
+                        <Grid item xs={4}>
                         </Grid>
                     </Grid>
 
                     <Typography variant="h5" style={{ marginTop: 32 }}>
                         {this.state.message}
                     </Typography>
+
+
+                    <Grid container style={{ marginTop: 32 }}>
+                        <Grid item xs={4}>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Button variant="contained" color="primary" onClick={() => this.handleWithdraw()}>
+                                Withdraw winnings
+                            </Button>
+                        </Grid>
+                        <Grid item xs={4}>
+                        </Grid>
+                    </Grid>
 
                 </div>
             </ThemeProvider>
