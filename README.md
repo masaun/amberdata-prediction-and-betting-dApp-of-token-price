@@ -101,6 +101,4 @@ https://docs.chain.link/docs/amberdata-chainlink-testnet#config
 - amberdata/amberdata-example-chainlink   
 https://github.com/amberdata/amberdata-example-chainlink   
 
-- honeycomb-wiki  
-https://github.com/clc-group/honeycomb-wiki/wiki  
 

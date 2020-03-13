@@ -3,7 +3,7 @@ import { Button, Typography, Grid, TextField } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 
 // Artifact files of contracts
-import BetPool from "./contracts/BetPool.json";
+import PredictionAndBetting from "./contracts/PredictionAndBetting.json";
 
 // Related to web3 provider
 import getWeb3 from "./utils/getWeb3";
@@ -31,9 +31,9 @@ class App extends Component {
             if (networkId !== 3) {
                 throw new Error("Select the Ropsten network from your MetaMask plugin");
             }
-            const deployedNetwork = BetPool.networks[networkId];
+            const deployedNetwork = PredictionAndBetting.networks[networkId];
             const contract = new web3.eth.Contract(
-                BetPool.abi,
+                PredictionAndBetting.abi,
                 deployedNetwork && deployedNetwork.address,
             );
 

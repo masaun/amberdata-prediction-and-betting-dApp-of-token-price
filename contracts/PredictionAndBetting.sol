@@ -6,7 +6,7 @@ import "../node_modules/openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 
-contract BetPool is ChainlinkClient, Ownable {
+contract PredictionAndBetting is ChainlinkClient, Ownable {
     using SafeMath for uint256;
 
     mapping(address => uint256) private betsTrue;
