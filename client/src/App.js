@@ -76,6 +76,15 @@ class App extends Component {
         const currentTokenPrice = _currentTokenPrice / 100
         console.log('=== currentTokenPrice ===', currentTokenPrice);
 
+
+        // @dev - Get timestamp latest
+        const requestResultTimeStampLatest = await this.state.contract.methods.requestResultTimeStampLatest().call();
+
+        const _timeStampLatest = await this.state.contract.methods.timeStampLatest().call(); 
+        const timeStampLatest = _timeStampLatest;
+        console.log('=== timeStampLatest ===', timeStampLatest);
+
+
         var resultMessage;
         if (resultReceived) {
             if (result) {
@@ -99,33 +108,73 @@ class App extends Component {
     }
 
     handleRequestResults = async () => {
-        const lastBlock = await this.state.web3.eth.getBlock("latest");
-        this.setState({ message: "Requesting the result from the oracle..." });
-        try {
-            // @dev - Specify argument
-            //const _oracle = '0xc99B3D447826532722E41bc36e644ba3479E4365';                          // Oracle address of Amberdata Chainlink (Testnet) on Ropsten
-            //const _jobId = await this.state.web3.utils.toHex('6b0a1ab2ce554465930aceaa79bb4346');  // Job ID of Amberdata Chainlink (Testnet) on Ropsten / New
-            //const _tokenAddress = '0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2';                    // MKR token on mainnet
+        // @dev - Execute send request of timestamp latest
+        await this.state.contract.methods.requestResultTimeStampLatest().send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
 
-            //@dev - Execute send request
-            await this.state.contract.methods.requestResult().send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
-            //await this.state.contract.methods.requestResult(_oracle, _jobId, _tokenAddress).send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
+        // @dev - availableTimeToRequestResult is plus 1 day
+        var availableTimeToRequestResult = await this.state.timeStampLatest + 86400;
 
-            while (true) {
-                const responseEvents = await this.state.contract.getPastEvents('ChainlinkFulfilled', { fromBlock: lastBlock.number, toBlock: 'latest' });
-                if (responseEvents.length !== 0) {
-                    break;
+        var date = await new Date();
+        var a = await date.getTime();
+        //var currentTime = await Math.floor(a / 1000);
+        var currentTime = await this.state.timeStampLatest + 1; // For test
+
+        // @dev - Condition whether it execute requestResult() function or not
+        if (currentTime < availableTimeToRequestResult) {
+            // execute
+            const lastBlock = await this.state.web3.eth.getBlock("latest");
+            this.setState({ message: "Requesting the result from the oracle..." });
+            try {
+                // @dev - Execute send request
+                await this.state.contract.methods.requestResult().send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
+                //await this.state.contract.methods.requestResult(_oracle, _jobId, _tokenAddress).send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
+
+                while (true) {
+                    const responseEvents = await this.state.contract.getPastEvents('ChainlinkFulfilled', { fromBlock: lastBlock.number, toBlock: 'latest' });
+                    if (responseEvents.length !== 0) {
+                        break;
+                    }
+
+                    // Log of response
+                    console.log('=== responseEvents（Log of response）===', responseEvents);
                 }
-
-                // Log of response
-                console.log('=== responseEvents（Log of response）===', responseEvents);
+                this.refreshState();
+                this.setState({ message: "The result is delivered" });
+            } catch (error) {
+                console.error(error);
+                this.setState({ message: "Failed getting the result" });
             }
-            this.refreshState();
-            this.setState({ message: "The result is delivered" });
-        } catch (error) {
-            console.error(error);
-            this.setState({ message: "Failed getting the result" });
+        } else {
+            await this.setState({ message: "[Validation Message]：You could not request result until tomorrow" });
         }
+
+
+        /////////////////////////////////////////
+        /// @dev - Original codes below 
+        /////////////////////////////////////////
+        // @dev - Get result of prediction
+        // const lastBlock = await this.state.web3.eth.getBlock("latest");
+        // this.setState({ message: "Requesting the result from the oracle..." });
+        // try {
+        //     // @dev - Execute send request
+        //     await this.state.contract.methods.requestResult().send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
+        //     //await this.state.contract.methods.requestResult(_oracle, _jobId, _tokenAddress).send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
+
+        //     while (true) {
+        //         const responseEvents = await this.state.contract.getPastEvents('ChainlinkFulfilled', { fromBlock: lastBlock.number, toBlock: 'latest' });
+        //         if (responseEvents.length !== 0) {
+        //             break;
+        //         }
+
+        //         // Log of response
+        //         console.log('=== responseEvents（Log of response）===', responseEvents);
+        //     }
+        //     this.refreshState();
+        //     this.setState({ message: "The result is delivered" });
+        // } catch (error) {
+        //     console.error(error);
+        //     this.setState({ message: "Failed getting the result" });
+        // }
     }
 
     handleWithdraw = async () => {
@@ -181,10 +230,7 @@ class App extends Component {
                 <div className="App">
                     <Header />
                     <Typography variant="h5" style={{ marginTop: 32 }}>
-                        Oracle is going to return a number between 1 and 6
-                    </Typography>
-                    <Typography variant="h5" style={{ marginTop: 32 }}>
-                        {this.state.resultMessage}
+                        [Topic of prediction]：Is Token price of MKR going to exceed 520 USD or not tomorrow?
                     </Typography>
 
                     <Grid container style={{ marginTop: 32 }}>
@@ -195,12 +241,12 @@ class App extends Component {
                         </Grid>
                         <Grid item xs={3}>
                             <Typography variant="h5">
-                                6
+                                520 USD or more
                             </Typography>
                         </Grid>
                         <Grid item xs={3}>
                             <Typography variant="h5">
-                                Not 6
+                                Less than 520 USD
                             </Typography>
                         </Grid>
                     </Grid>
@@ -271,6 +317,18 @@ class App extends Component {
                             </Button>
                         </Grid>
                     </Grid>
+
+                    <hr />
+                    <Typography variant="h5" style={{ marginTop: 32 }}>
+                        [Notice]： Users could not requestResult until tomorrow（0:00 AM of GMT tomorrow）
+                    </Typography>
+
+                    <Typography variant="h5" style={{ marginTop: 32 }}>
+                        Oracle is going to return the result of token price of MKR
+                    </Typography>
+                    <Typography variant="h5" style={{ marginTop: 32 }}>
+                        {this.state.resultMessage}
+                    </Typography>
 
                     <Grid container style={{ marginTop: 32 }}>
                         <Grid item xs={3}>
