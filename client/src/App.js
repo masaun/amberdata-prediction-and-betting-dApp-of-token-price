@@ -109,15 +109,15 @@ class App extends Component {
 
     handleRequestResults = async () => {
         // @dev - Execute send request of timestamp latest
-        await this.state.contract.methods.requestResultTimeStampLatest().send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
+        this.state.contract.methods.requestResultTimeStampLatest().send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
 
         // @dev - availableTimeToRequestResult is plus 1 day
         var availableTimeToRequestResult = await this.state.timeStampLatest + 86400;
 
-        var date = await new Date();
-        var a = await date.getTime();
-        //var currentTime = await Math.floor(a / 1000);          // For production
-        var currentTime = await availableTimeToRequestResult + 1;  // For test
+        var date = new Date();
+        var a = date.getTime();
+        var currentTime = Math.floor(a / 1000);                      // For production
+        //var currentTime = await availableTimeToRequestResult + 1;  // For test
 
         // @dev - Condition whether it execute requestResult() function or not
         if (currentTime > availableTimeToRequestResult) {
@@ -145,8 +145,39 @@ class App extends Component {
                 this.setState({ message: "Failed getting the result" });
             }
         } else {
-            await this.setState({ message: "[Warning Message]：You could not request result until tomorrow" });
+            //this.setState({ message: "[Warning Message]：You could not request result until tomorrow" });
         }
+
+
+        // if (currentTime > availableTimeToRequestResult) {
+        //     // execute
+        //     const lastBlock = await this.state.web3.eth.getBlock("latest");
+        //     this.setState({ message: "Requesting the result from the oracle..." });
+        //     try {
+        //         // @dev - Execute send request
+        //         await this.state.contract.methods.requestResult().send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
+        //         //await this.state.contract.methods.requestResult(_oracle, _jobId, _tokenAddress).send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
+
+        //         while (true) {
+        //             const responseEvents = await this.state.contract.getPastEvents('ChainlinkFulfilled', { fromBlock: lastBlock.number, toBlock: 'latest' });
+        //             if (responseEvents.length !== 0) {
+        //                 break;
+        //             }
+
+        //             // Log of response
+        //             console.log('=== responseEvents（Log of response）===', responseEvents);
+        //         }
+        //         this.refreshState();
+        //         this.setState({ message: "The result is delivered" });
+        //     } catch (error) {
+        //         console.error(error);
+        //         this.setState({ message: "Failed getting the result" });
+        //     }
+        // } else {
+        //     await this.setState({ message: "[Warning Message]：You could not request result until tomorrow" });
+        // }
+
+
 
 
         /////////////////////////////////////////
