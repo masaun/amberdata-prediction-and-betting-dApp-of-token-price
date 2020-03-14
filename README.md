@@ -101,4 +101,10 @@ https://docs.chain.link/docs/amberdata-chainlink-testnet#config
 - amberdata/amberdata-example-chainlink   
 https://github.com/amberdata/amberdata-example-chainlink   
 
+<br>
 
+- Tools related to chainlink（on Ropsten Testnet）
+   - Chainlink fancet  
+     https://ropsten.chain.link/
+   - Chainlink Explore  
+     https://ropsten.explorer.chain.link/
