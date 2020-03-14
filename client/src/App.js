@@ -116,10 +116,9 @@ class App extends Component {
 
         var date = new Date();
         var a = date.getTime();
-        var currentTime = Math.floor(a / 1000);                      // For production
-        //var currentTime = await availableTimeToRequestResult + 1;  // For test
+        var currentTime = Math.floor(a / 1000);  // For production
 
-        // @dev - Condition whether it execute requestResult() function or not
+        //@dev - Condition whether it execute requestResult() function or not
         if (currentTime > availableTimeToRequestResult) {
             // execute
             const lastBlock = await this.state.web3.eth.getBlock("latest");
@@ -145,39 +144,8 @@ class App extends Component {
                 this.setState({ message: "Failed getting the result" });
             }
         } else {
-            //this.setState({ message: "[Warning Message]：You could not request result until tomorrow" });
+            this.setState({ message: "[Warning Message]：You could not request result until tomorrow" });
         }
-
-
-        // if (currentTime > availableTimeToRequestResult) {
-        //     // execute
-        //     const lastBlock = await this.state.web3.eth.getBlock("latest");
-        //     this.setState({ message: "Requesting the result from the oracle..." });
-        //     try {
-        //         // @dev - Execute send request
-        //         await this.state.contract.methods.requestResult().send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
-        //         //await this.state.contract.methods.requestResult(_oracle, _jobId, _tokenAddress).send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
-
-        //         while (true) {
-        //             const responseEvents = await this.state.contract.getPastEvents('ChainlinkFulfilled', { fromBlock: lastBlock.number, toBlock: 'latest' });
-        //             if (responseEvents.length !== 0) {
-        //                 break;
-        //             }
-
-        //             // Log of response
-        //             console.log('=== responseEvents（Log of response）===', responseEvents);
-        //         }
-        //         this.refreshState();
-        //         this.setState({ message: "The result is delivered" });
-        //     } catch (error) {
-        //         console.error(error);
-        //         this.setState({ message: "Failed getting the result" });
-        //     }
-        // } else {
-        //     await this.setState({ message: "[Warning Message]：You could not request result until tomorrow" });
-        // }
-
-
 
 
         /////////////////////////////////////////
