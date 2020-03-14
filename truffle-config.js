@@ -15,7 +15,8 @@ module.exports = {
         return new HDWalletProvider(walletFile.ropsten_mnemonics, walletFile.ropsten_provider);
       },
       network_id: 3,
-      gasPrice: 20000000000
+      gasPrice: 20000000000,
+      skipDryRun: true
     }
   },
   compilers: {
@@ -23,5 +24,4 @@ module.exports = {
       version: "0.4.24"
     }
   },
-  skipDryRun: true
 }
