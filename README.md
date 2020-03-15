@@ -12,14 +12,20 @@
 
 <br>
 
+## Introduce using process of this dApp 
+- Post of how to use this dApp
+https://medium.com/@masanoriuno_75621/prediction-and-betting-dapp-of-token-price-by-using-amberdata-io-and-chainlink-1c0b45490ebc
+
+
+<br>
+
 ## UI and process of Prediction and Betting dApp
 
 Once you follow the previous steps, your browser should display the page below at `http://localhost:3000/`.
 If the page is blank, try logging in to your MetaMask add-on.
 
 
-
-
+<br>
 
 
 ## Before installation
