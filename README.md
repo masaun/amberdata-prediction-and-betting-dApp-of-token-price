@@ -47,33 +47,27 @@ Fund it with [Ropsten ETH](https://faucet.metamask.io/) and [Ropsten LINK](https
 ## Installation
 
 - ① Clone this repo using:  
-
 `git clone git@github.com:masaun/amberdata_chainlink_oracle_integration.git`  
 
 - ② Go to the main directory (`/amberdata_chainlink_oracle_integration`)  
 
 - ③ Install the dependencies for the smart contract:  
-
 `npm install`  
 
 - ④ Create the file that you are going to enter your Infura credentials:  
-
 `cp wallet.json.example wallet.json`  
 
 - ⑤ Open the newly created `wallet.json` file and enter the mnemonics and the endpoint URL you have noted down earlier, similar to `wallet.json.example`.  
 
 - ⑥ Deploy the contract (Ropsten LINK will be transferred from your wallet to the contract automatically during deployment)  
-
 `npm run migrate:ropsten`  
 
 - ⑦ Go to the front-end project directory (`/amberdata_chainlink_oracle_integration/client`)  
 
 - ⑧ Install the dependencies for the front-end project:  
-
 `npm install`  
 
 - ⑨ Start the server    
-
 `npm run start`  
 
 - ⑩ Access browser  

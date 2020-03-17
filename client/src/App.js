@@ -229,7 +229,7 @@ class App extends Component {
                 <div className="App">
                     <Header />
                     <Typography variant="h5" style={{ marginTop: 32 }}>
-                        [Topic of prediction]：Is Token price of MKR going to exceed 520 USD or not tomorrow?
+                        [Topic of prediction]：Is Token price of MKR going to exceed 220 USD or not tomorrow?
                     </Typography>
 
                     <Grid container style={{ marginTop: 32 }}>
@@ -240,12 +240,12 @@ class App extends Component {
                         </Grid>
                         <Grid item xs={3}>
                             <Typography variant="h5">
-                                520 USD or more
+                                220 USD or more
                             </Typography>
                         </Grid>
                         <Grid item xs={3}>
                             <Typography variant="h5">
-                                Less than 520 USD
+                                Less than 220 USD
                             </Typography>
                         </Grid>
                     </Grid>
@@ -307,12 +307,12 @@ class App extends Component {
                         </Grid>
                         <Grid item xs={3}>
                             <Button variant="contained" color="primary" onClick={() => this.handleBet("true")}>
-                                Bet on "520 USD or more"
+                                Bet on "220 USD or more"
                             </Button>
                         </Grid>
                         <Grid item xs={3}>
                             <Button variant="contained" color="primary" onClick={() => this.handleBet("false")}>
-                                Bet on "Less than 520 USD"
+                                Bet on "Less than 220 USD"
                             </Button>
                         </Grid>
                     </Grid>
