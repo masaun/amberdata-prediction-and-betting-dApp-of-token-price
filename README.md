@@ -80,6 +80,14 @@ Fund it with [Ropsten ETH](https://faucet.metamask.io/) and [Ropsten LINK](https
 - After process of ⑥(Deploy the contract) above, it is better to transfer LINK token from Chainlink fancet on ropsten below to deployed contract address.
 （Chainlink fancet on ropsten below are able to transfer 100 LINK）  
 https://ropsten.chain.link/  
+  - In this case,  
+    - deployed contract address of "PredictionAndBetting" is `"0x1E471587D723bD45B31FfFC0819054C0Ac917cE2"`  
+    ![amberdata_7 1](https://user-images.githubusercontent.com/19357502/76862375-5033ad80-685e-11ea-8b97-48ac6ed3817e.png)
+    ↓
+  - In this case above, developer should send some amount LINK to deployed contract address of "PredictionAndBetting" in advance.  
+    (In case developer send via chainlink-fancet below link, it can send 100LINK)  
+    https://ropsten.chain.link/
+    ![amberdata_7_2020-03-17 at 14 12 52](https://user-images.githubusercontent.com/19357502/76862380-50cc4400-685e-11ea-9ed9-2ab40865f38b.png)
 
 
 <br>
