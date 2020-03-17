@@ -89,11 +89,9 @@ class App extends Component {
         if (resultReceived) {
             if (result) {
                 resultMessage = currentTokenPrice;         // @dev - Amberdata
-                //resultMessage = "Result is 6";
             }
             else {
                 resultMessage = "Result is 0";         // @dev - Amberdata
-                //resultMessage = "Result is not 6";
             }
         }
         else {
