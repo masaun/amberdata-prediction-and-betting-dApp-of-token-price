@@ -78,20 +78,6 @@ contract PredictionAndBetting is ChainlinkClient, Ownable {
         }
     }
 
-
-    // You probably do not want onlyOwner here
-    // But then, you need some mechanism to prevent people from spamming this
-    // function requestResult() external returns (bytes32 requestId)  // @Notice - Remove a modifier of "onlyOwner"
-    // {
-    //     require(!resultReceived, "The result has already been received.");
-    //     Chainlink.Request memory req = buildChainlinkRequest(jobId, this, this.fulfill.selector);
-    //     req.add("low", "1");
-    //     req.add("high", "6");
-    //     req.add("copyPath", "random_number");
-    //     requestId = sendChainlinkRequestTo(chainlinkOracleAddress(), req, oraclePaymentAmount);
-    // }
-
-
     // @dev - Amberdata
     // @dev - Get timestamp of latest
     function requestResultTimeStampLatest() external returns (bytes32 requestId) {
@@ -111,12 +97,6 @@ contract PredictionAndBetting is ChainlinkClient, Ownable {
     function requestResult() external returns (bytes32 requestId) {
         string memory _tokenAddress = "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2"; // MKR token on mainnet
 
-        // @dev - Using int256 as JobID of data-type  
-        // Chainlink.Request memory req = buildChainlinkRequest(jobId_2, address(this), this.fulfill.selector);
-        // req.add("extPath", concat("market/tokens/prices/", _tokenAddress, "/latest"));
-        // req.add("path", "payload.0.priceUSD");
-        // req.addInt("times", 100);
-        
         // @dev - Get historical token price data
         Chainlink.Request memory req = buildChainlinkRequest(jobId_2, address(this), this.fulfill.selector);
         req.add("extPath", concat("market/tokens/prices/", _tokenAddress, "/historical"));
@@ -125,23 +105,6 @@ contract PredictionAndBetting is ChainlinkClient, Ownable {
 
         requestId = sendChainlinkRequestTo(chainlinkOracleAddress(), req, oraclePaymentAmount);
     }
-
-
-    // function fulfill(bytes32 _requestId, int256 data)
-    // public
-    // recordChainlinkFulfillment(_requestId)
-    // {
-    //     resultReceived = true;
-    //     if (data == 6)
-    //     {
-    //         result = true;
-    //     }
-    //     else
-    //     {
-    //         result = false;
-    //     }
-    // }
-
 
     function fulfillTimeStampLatest(bytes32 _requestId, uint256 _timestamp)
     public
@@ -158,13 +121,6 @@ contract PredictionAndBetting is ChainlinkClient, Ownable {
         currentTokenPrice = _price;
 
         resultReceived = true;
-        
-        // if (_price > 0) {
-        //     result = true;
-        // } else {
-        //     result = false;
-        // }
-
 
         // @dev - The condition of how to judge WIN or LOST
         if (currentTokenPrice > 520) {
