@@ -123,7 +123,7 @@ contract PredictionAndBetting is ChainlinkClient, Ownable {
         resultReceived = true;
 
         // @dev - The condition of how to judge WIN or LOST
-        if (currentTokenPrice > 520) {
+        if (currentTokenPrice > 220) {
             result = true;
         } else {
             result = false;
